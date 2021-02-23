@@ -74,7 +74,7 @@ public class Sistema extends javax.swing.JFrame {
 
         cbMateria.setBackground(new java.awt.Color(255, 255, 255));
         cbMateria.setForeground(new java.awt.Color(255, 255, 255));
-        cbMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Calculo ", "Estadistica", "Redes I", "Base de datos I", "Arquitectura de la PC" }));
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Calificacion:");
@@ -86,7 +86,7 @@ public class Sistema extends javax.swing.JFrame {
 
         cdEstatus.setBackground(new java.awt.Color(255, 255, 255));
         cdEstatus.setForeground(new java.awt.Color(255, 255, 255));
-        cdEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cdEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aprobado", "Reprobado" }));
 
         buttonNuevo.setText("Nuevo");
 
