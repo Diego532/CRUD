@@ -2,10 +2,13 @@
 
 package formularios;
 
-import conexionSQL.conexionSQL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import conexionSQL.conexionSQL; // paquete donde se encuentra la coenxion con la base de datos
+import java.sql.Connection; // se importa para crar una variable que s einicialice con el metodo de conexion antes creado
+import java.sql.PreparedStatement; // se importa para guardar dato
+import java.sql.Statement; // se importa para mostrar dato 
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Sistema extends javax.swing.JFrame {
 
@@ -22,6 +25,7 @@ public class Sistema extends javax.swing.JFrame {
         
         this.setLocationRelativeTo(null); // se coloca para el programa aparezca en el centro de la pantalla
         this.getContentPane().setBackground(getBackground()); // s ele da color al background
+        mostrarDatos();
         
     }
 
@@ -180,13 +184,13 @@ public class Sistema extends javax.swing.JFrame {
         tablaAlumnos.setBackground(new java.awt.Color(102, 102, 255));
         tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(tablaAlumnos);
@@ -235,6 +239,7 @@ public class Sistema extends javax.swing.JFrame {
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
         insertarDatos();
         limpiarCampos();
+        mostrarDatos();
     }//GEN-LAST:event_buttonGuardarActionPerformed
     
     public void limpiarCampos()
@@ -278,6 +283,44 @@ public class Sistema extends javax.swing.JFrame {
         
            
     }
+    
+    public void mostrarDatos()
+    {
+        String[] titulos = {"ID Alumno", "Nombre", "Apellido", "Materia", "Estatus"};
+        String[] registro = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel(null,titulos);
+        
+        String SQL = "Select * from alumnos"; //se coloca la sentencia SQL
+        
+        try {
+            Statement st = conector.createStatement();
+            ResultSet show = st.executeQuery(SQL);
+            while (show.next()){ // coloco el metodo next para que recorra todos los valores de mi tabla alumnos
+                registro[0] = show.getString("idalumno");
+                registro[1] = show.getString("Nombre");
+                registro[2] = show.getString("Apellido");
+                registro[3] = show.getString("Materia");
+                registro[4] = show.getString("Calificacion");
+                registro[5] = show.getString("estatus");
+                
+                modelo.addColumn(registro);
+            }
+            
+            tablaAlumnos.setModel(modelo);
+            
+        }catch(Exception e){ 
+            
+            JOptionPane.showMessageDialog(null, "Error al Mostrar Datos" + e.getMessage());
+        
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
