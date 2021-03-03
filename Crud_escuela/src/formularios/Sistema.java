@@ -181,7 +181,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addGap(75, 75, 75))
         );
 
-        tablaAlumnos.setBackground(new java.awt.Color(102, 102, 255));
+        tablaAlumnos.setBackground(new java.awt.Color(204, 204, 204));
         tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -193,6 +193,11 @@ public class Sistema extends javax.swing.JFrame {
 
             }
         ));
+        tablaAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAlumnosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaAlumnos);
 
         jLabel6.setText("Busqueda: ");
@@ -241,6 +246,20 @@ public class Sistema extends javax.swing.JFrame {
         limpiarCampos();
         mostrarDatos();
     }//GEN-LAST:event_buttonGuardarActionPerformed
+
+    //////////////////////// Evento de CLick del Mouse //////////////////////////
+    private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
+        
+        int filaSeleccionada = tablaAlumnos.rowAtPoint(evt.getPoint());
+        
+        txtNombre.setText(tablaAlumnos.getValueAt(filaSeleccionada, 1).toString());
+        txtApellido.setText(tablaAlumnos.getValueAt(filaSeleccionada,2).toString());
+        cbMateria.setSelectedItem(tablaAlumnos.getValueAt(filaSeleccionada, 3).toString());
+        txtCalificacion.setText(tablaAlumnos.getValueAt(filaSeleccionada,4).toString());
+        cbEstatus.setSelectedItem(tablaAlumnos.getValueAt(filaSeleccionada,5).toString());
+                
+        
+    }//GEN-LAST:event_tablaAlumnosMouseClicked
     
     public void limpiarCampos()
     {
