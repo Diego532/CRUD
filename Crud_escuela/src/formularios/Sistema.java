@@ -303,7 +303,7 @@ public class Sistema extends javax.swing.JFrame {
                 registro[4] = show.getString("Calificacion");
                 registro[5] = show.getString("estatus");
                 
-                modelo.addColumn(registro);
+                modelo.addRow(registro);
             }
             
             tablaAlumnos.setModel(modelo);
