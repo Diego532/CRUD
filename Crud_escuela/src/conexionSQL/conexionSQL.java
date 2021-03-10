@@ -17,7 +17,7 @@ public class conexionSQL {
             Class.forName("com.mysql.jdbc.Driver");
             conectar = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/escuela","root",""); //Enlace a la base de datos 
             
-            JOptionPane.showMessageDialog(null,"Conexion Exitosa"); // esto s ehace para si la conexion es exitosa muestre un mensjae en pantalla
+            JOptionPane.showMessageDialog(null,"Conexion Exitosa"); // esto se hace para si la conexion es exitosa muestre un mensjae en pantalla
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error de Conexion" + e.getMessage());

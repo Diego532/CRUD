@@ -95,6 +95,11 @@ public class Sistema extends javax.swing.JFrame {
         cbEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aprobado", "Reprobado" }));
 
         buttonNuevo.setText("Nuevo");
+        buttonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonNuevoActionPerformed(evt);
+            }
+        });
 
         buttonGuardar.setText("Guardar");
         buttonGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +111,11 @@ public class Sistema extends javax.swing.JFrame {
         buttonEliminar.setText("Eliminar");
 
         buttonActualizar.setText("Actualizar");
+        buttonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -260,6 +270,16 @@ public class Sistema extends javax.swing.JFrame {
                 
         
     }//GEN-LAST:event_tablaAlumnosMouseClicked
+
+    private void buttonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualizarActionPerformed
+        actualizarDatos();
+        limpiarCampos();
+        mostrarDatos();
+    }//GEN-LAST:event_buttonActualizarActionPerformed
+
+    private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_buttonNuevoActionPerformed
     
     public void limpiarCampos()
     {
@@ -303,9 +323,50 @@ public class Sistema extends javax.swing.JFrame {
            
     }
     
+    
+    
+    public void actualizarDatos()
+    {
+        try{
+            //sentencia SQL
+            String SQL = "update alumnos set Nombre =?, Apellido =?, Materia =?, Calificacion =?, estatus =? where idalumno =?";
+            
+            int filaSeleccionada = tablaAlumnos.getSelectedRow();
+            String registro = (String)tablaAlumnos.getValueAt(filaSeleccionada, 0);
+           
+            // una vatiable para preparar los datos
+            PreparedStatement pst = conector.prepareStatement(SQL);
+            
+            //Ingresamos los parametros 
+            pst.setString(1, txtNombre.getText());
+            pst.setString(2, txtApellido.getText());
+            
+            int seleccionado = cbMateria.getSelectedIndex();
+            pst.setString(3, cbMateria.getItemAt(seleccionado));
+            
+            pst.setDouble(4, Double.parseDouble(txtCalificacion.getText()));
+            
+            seleccionado = cbEstatus.getSelectedIndex();
+            pst.setString(5, cbEstatus.getItemAt(seleccionado));
+          
+          pst.setString(6, registro);
+          pst.execute();
+          
+          JOptionPane.showMessageDialog(null, "Actualizacion exitosa");
+            
+        }catch(Exception e){
+          JOptionPane.showMessageDialog(null, "Actualizacion fallida" + e.getMessage());  
+        }
+    }
+    
+    
+    
+    
+    
+    
     public void mostrarDatos()
     {
-        String[] titulos = {"ID Alumno", "Nombre", "Apellido", "Materia", "Estatus"};
+        String[] titulos = {"ID Alumno", "Nombre", "Apellido", "Materia","Calificacion" ,"Estatus"};
         String[] registro = new String[6];
         DefaultTableModel modelo = new DefaultTableModel(null,titulos);
         
