@@ -109,6 +109,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         buttonEliminar.setText("Eliminar");
+        buttonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEliminarActionPerformed(evt);
+            }
+        });
 
         buttonActualizar.setText("Actualizar");
         buttonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -272,7 +277,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaAlumnosMouseClicked
 
     private void buttonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualizarActionPerformed
-        actualizarDatos();
+        actualizarRegistro();
         limpiarCampos();
         mostrarDatos();
     }//GEN-LAST:event_buttonActualizarActionPerformed
@@ -280,6 +285,12 @@ public class Sistema extends javax.swing.JFrame {
     private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_buttonNuevoActionPerformed
+
+    private void buttonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEliminarActionPerformed
+        eliminarRegistro();
+        mostrarDatos();
+        limpiarCampos();
+    }//GEN-LAST:event_buttonEliminarActionPerformed
     
     public void limpiarCampos()
     {
@@ -325,10 +336,10 @@ public class Sistema extends javax.swing.JFrame {
     
     
     
-    public void actualizarDatos()
+    public void actualizarRegistro()
     {
         try{
-            //sentencia SQL
+            //sentencia SQL para actualizar, se colocan las columnas y el id seleccionado
             String SQL = "update alumnos set Nombre =?, Apellido =?, Materia =?, Calificacion =?, estatus =? where idalumno =?";
             
             int filaSeleccionada = tablaAlumnos.getSelectedRow();
@@ -359,11 +370,29 @@ public class Sistema extends javax.swing.JFrame {
         }
     }
     
-    
-    
-    
-    
-    
+   
+    public void eliminarRegistro()
+    {
+        int filaseleccionada = tablaAlumnos.getSelectedRow();
+        
+        try{
+            //Sentencia SQL
+            String SQL = "delete from alumnos where idalumno=" + tablaAlumnos.getValueAt(filaseleccionada, 0);
+            Statement st = conector.createStatement();
+            
+            // Ejecutar la consulta 
+            int n = st.executeUpdate(SQL);
+            
+            if (n >=0)
+                JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Eliminar Registro"+ e.getMessage());
+        }    
+    }
+       
+     
+        
     public void mostrarDatos()
     {
         String[] titulos = {"ID Alumno", "Nombre", "Apellido", "Materia","Calificacion" ,"Estatus"};
