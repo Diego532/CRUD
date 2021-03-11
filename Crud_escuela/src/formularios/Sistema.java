@@ -218,6 +218,11 @@ public class Sistema extends javax.swing.JFrame {
         jLabel6.setText("Busqueda: ");
 
         txtBusqueda.setBackground(new java.awt.Color(255, 255, 255));
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -291,6 +296,10 @@ public class Sistema extends javax.swing.JFrame {
         mostrarDatos();
         limpiarCampos();
     }//GEN-LAST:event_buttonEliminarActionPerformed
+
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
+        filtrarDatos(txtBusqueda.getText());
+    }//GEN-LAST:event_txtBusquedaActionPerformed
     
     public void limpiarCampos()
     {
@@ -424,6 +433,42 @@ public class Sistema extends javax.swing.JFrame {
         }
         
     }
+    
+    public void filtrarDatos(String valor)
+    {
+        String[] titulos = {"ID Alumno", "Nombre", "Apellido", "Materia","Calificacion" ,"Estatus"};
+        String[] registro = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel(null,titulos);
+        
+        String SQL = "Select * from alumnos where nombre like '%"+valor+"%'"; //se coloca la sentencia SQL
+        
+        try {
+            Statement st = conector.createStatement();
+            ResultSet show = st.executeQuery(SQL);
+            while (show.next()){ // coloco el metodo next para que recorra todos los valores de mi tabla alumnos
+                registro[0] = show.getString("idalumno");
+                registro[1] = show.getString("Nombre");
+                registro[2] = show.getString("Apellido");
+                registro[3] = show.getString("Materia");
+                registro[4] = show.getString("Calificacion");
+                registro[5] = show.getString("estatus");
+                
+                modelo.addRow(registro);
+            }
+            
+            tablaAlumnos.setModel(modelo);
+            
+        }catch(Exception e){ 
+            
+            JOptionPane.showMessageDialog(null, "Error al Mostrar Datos" + e.getMessage());
+        
+        }
+        
+    }
+    
+    
+    
+    
     
     
     
